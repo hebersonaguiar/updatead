@@ -1,0 +1,32 @@
+version: '3.1'
+
+services:
+
+  updatead:
+    image: updatead:1.2
+    hostname: updatead
+    container_name: updatead
+    environment: 
+      AD_SERVER: 
+      USER_SVC: 
+      PASS_SVC:
+      API_DB:  
+      MYSQL_HOST: 
+      MYSQL_USER: 
+      MYSQL_PASS: 
+      MYSQL_DB: 
+    external_links:
+      - mysql:mysql
+    ports:
+      - "5002:5000"
+    networks:
+      front:
+        ipv4_address: 172.36.238.22
+
+networks:
+    front:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.36.238.0/24

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>ATUALIZAÇÃO CADASTRAL</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/static/updatead.css" type="text/css">
+      <link rel="stylesheet" href="/static/style.css" type="text/css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <script src="https://rawgit.com/RobinHerbots/Inputmask/4.x/dist/jquery.inputmask.bundle.js"></script>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+      <script defer="defer" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
+   </head>
+   <body>
+      <div id="barra-brasil" style="background:#7F7F7F; height: 20px; padding:0 0 0 10px;display:block;">
+         <ul id="menu-barra-temp" style="list-style:none;">
+            <li style="display:inline; float:left;padding-right:10px; margin-right:10px; border-right:1px solid #EDEDED">
+               <a href="http://brasil.gov.br" style="font-family:sans,sans-serif; text-decoration:none; color:white;">Portal do Governo Brasileiro</a>
+            </li>
+            <li>
+               <a style="font-family:sans,sans-serif; text-decoration:none; color:white;" href="http://epwg.governoeletronico.gov.br/barra/atualize.html">Atualize sua Barra de Governo</a>
+            </li>
+         </ul>
+      </div>
+      <div class="topo">
+         <span id="ministerioFirst">Ministério de</span>
+         <span id="ministerioSecond">Minas e Energia</span>
+      </div>
+      <div class="subtopo">
+         <h1 id="titleMin" >Atualização de dados cadastrais</h1>
+         <div class="clear"></div>
+         {% for o in dataname %}
+         <h1 id="welcome" >Bem Vindo, {{ o.displayName }} !</h1>
+         {% endfor %}
+         <h1 id="welcomelogout" >Sair <a id="logout" href="/logout"><i class="fas fa-power-off"></i></a></h1>
+         </br>
+      </div>
+      </br>
+      <div class="container">
+         <form method="POST" action="/modifyuser" autocomplete="off" id="formUpdate">
+            <div class="form-group">
+               <label for="exampleFormControlInput1">LOGIN</label>
+               {% for o in data %}
+               <input id="login" class="form-control" type="text" class="form-control" value="{{ o.namead }}"  readonly="readonly" disabled/>
+               {% endfor %}
+            </div>
+            </br>
+            <!--ATUALIZAR EMPRESA OU VINCULO-->
+            <label for="exampleFormControlSelect1">SELECIONE SEU VINCULO:</label> </br>
+            <div class="form-check">
+               <input class="form-check-input" type="radio" onclick="yesnoCheck()" value="Servidor" name="vinculo" id="noCheck">
+               <label id="formCheckS" class="form-check-label" for="noCheck">
+               Servidor
+               </label>
+            </div>
+            <div class="form-check">
+               <input class="form-check-input" type="radio" onclick="yesnoCheck()" name="vinculo" id="yesCheck" >
+               <label id="formCheckP" class="form-check-label" for="yesCheck">
+               Prestador de Serviço 
+               </label>
+            </div>
+            <div class="form-group" id="ifYes" style="display:none">
+               <label for="company">EMPRESA</label>
+               <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                     <label class="input-group-text" for="company"><i class="fas fa-search"></i></label>
+                  </div>
+                  <input class="input" type="text" id="cargoVin" style="display:none;" name="cargo" value="Prestador de Serviço">
+                  <select name="vinculo" id="company" class="custom-select">
+                     <option value="">Selecione</option>
+                     {% for row in form_company %}
+                     <option value="{{ row.0 }}">{{ row.0 }}</option>
+                     {% endfor %}
+                  </select>
+                  </select>
+               </div>
+            </div>
+            </br>
+            <!--FIM ATUALIZAR EMPRESA OU VINCULO-->
+            <!--ATUALIZAR CARGO-->
+            <div class="form-group" id="cargoDiv" style="display:visible">
+               <label for="cargo">CARGO</label>
+               <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                     <label class="input-group-text" for="cargo"><i class="fas fa-search"></i></label>
+                  </div>
+                  <select name="cargo" id="cargo" class="custom-select" disabled>
+                     <option value="">Selecione</option>
+                     {% for row in form_office %}
+                     <option value="{{ row.0 }}">{{ row.0 }}</option>
+                     {% endfor %}
+                  </select>
+                  </select>
+               </div>
+            </div>
+            <!-- FIM ATUALIZAR CARGO-->
+            </br>
+            <!--ATUALIZAR SETOR-->
+            <label for="departamento">DEPARTAMENTO</label>
+            <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                  <label class="input-group-text" for="departamento"><i class="fas fa-search"></i></label>
+               </div>
+               <select name="departamento" id="departamento" class="custom-select" disabled>
+                  <option value="">Selecione</option>
+                  {% for row in form_structure %}
+                  <option value="{{ row.1 }}">{{ row.0 }}</option>
+                  {% endfor %}
+               </select>
+               </select>
+            </div>
+            <!-- FIM ATUALIZAR SETOR-->
+            </br>
+            <!--ATUALIZAR SALA-->
+            <label for="andar">ANDAR</label>
+            <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                  <label class="input-group-text" for="andar"><i class="fas fa-search"></i></label>
+               </div>
+               <select name="andar" id="andar" class="custom-select" disabled>
+                  <option value="default">Selecione</option>
+                  <option value="Subsolo">Subsolo</option>
+                  <option value="2º Subsolo">2º Subsolo</option>
+                  <option value="Terreo">Terreo</option>
+                  <option value="1º Andar">1º Andar</option>
+                  <option value="4º Andar">4º Andar</option>
+                  <option value="5º Andar">5º Andar</option>
+                  <option value="6º Andar">6º Andar</option>
+                  <option value="7º Andar">7º Andar</option>
+                  <option value="8º Andar">8º Andar</option>
+                  <option value="9º Andar">9º Andar</option>
+               </select>
+               </select>
+            </div>
+            </br>
+            <label for="sala">SALA</label>
+            <div class="input-group mb-3">
+               <div class="input-group-prepend">
+                  <label class="input-group-text" for="sala"><i class="fas fa-search"></i></label>
+               </div>
+               <select name="sala" id="sala" class="custom-select" disabled>
+                  <option value="">Selecione</option>
+               </select>
+               </select>
+            </div>
+            <!--FIM ATUALIZAR SALA-->
+            </br>
+            <!--ATUALIZAR RAMAL-->
+            <div class="form-group">
+               <label for="ramal">RAMAL</label>
+               <input class="form-control" type="text" class="form-control" id="ramal" data-inputmask-regex="[5]{1}[0-9]{3}" maxlength="4" required="true" name="ramal" placeholder="Ex.: 5050" disabled> 
+            </div>
+            </br>
+            <!--SALVAR ou INFORMAR QUE JÁ FEZ ATUALIZAÇÃO-->
+            <button type="submit" class="btn btn-primary" data-toggle="modal" id="send" data-target="#exampleModalCenter" disabled>ENVIAR</button>
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+               <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                     <div class="modal-body" style="font-size: 20px;">
+                        Usuário Atualizado com Sucesso
+                     </div>
+                  </div>
+               </div>
+            </div>
+      </div>
+      </form>
+   </body>
+   <footer role="footer">
+      <div id="footer-content">
+         <div id="footer-info">
+            <div id="footer-col-1">
+               <h3>Assuntos</h3>
+               <nav class="" id="footer-navigation">
+                  <ul>
+                     <li> <a href="http://www.mme.gov.br"><span> Página Inicial</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> Consultas Públicas</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> Agendamento Usina Solar</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> Acesso a Informação</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> Agenda de Autoridades</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> Conselhos e Comitês</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> Ouvidoria</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> Secretarias</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> Entidades Vinculadas e Afins</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> Publicações e Indicadores</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> Projetos</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> Reidi/Repenec</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> Projetos Prioritários</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> Destaques do Setor de Energia</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> Logística Sustentável</span></a> </li>
+                     <li> <a href="http://www.portaltransparencia.gov.br/"><span> Portal da Transparência</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br/"><span> SEI</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br/"><span> PDTIC</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br/"><span> Discursos do Ministro Bento Albuquerque</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> SIE Brasil</span></a> </li>
+                  </ul>
+               </nav>
+            </div>
+            <div id="footer-col-2">
+               <h3>Serviços</h3>
+               <nav class="" id="footer-navigation-2">
+                  <ul>
+                     <li> <a href="http://www.mme.gov.br"><span> Perguntas Frequentes</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> Horário de atendimento</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> Área de imprensa</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> Comunidade MME</span></a> </li>
+                  </ul>
+               </nav>
+            </div>
+            <div id="footer-col-3">
+               <h3>Redes Sociais</h3>
+               <nav class="" id="footer-navigation-3">
+                  <ul>
+                     <li> <a href="http://www.mme.gov.br"><span> Facebook</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> YouTube</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> Twitter</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> Flickr</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> Tumblr</span></a> </li>
+                  </ul>
+               </nav>
+            </div>
+            <div id="footer-col-4">
+               <h3>RSS</h3>
+               <nav class="" id="footer-navigation-4">
+                  <ul>
+                     <li> <a href="http://www.mme.gov.br"><span> O que é?</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> Assine</span></a> </li>
+                     <li> <a href="http://www.mme.gov.br"><span> Acessibilidade</span></a> </li>
+                  </ul>
+               </nav>
+            </div>
+         </div>
+      </div>
+   </footer>
+   <div id="footer-brasil">
+      <div id="wrapper-footer-brasil"><a href="http://www.acessoainformacao.gov.br/"><span class="logo-acesso-footer"></span></a><a class="logo-governo-federal" href="http://www.brasil.gov.br/" alt="Governo Federal" title="Governo Federal"></a></div>
+   </div>
+   <script type="text/javascript" src="/static/js/generalscript.js"></script>
+</html>
