@@ -8,6 +8,16 @@ if (namecargo != "") {
     }
 });
 
+// ENABLE / DISABLE INPUT CARGO --> DEPARTAMENTO    
+document.getElementById("company").addEventListener("change", function() {
+var namecompany = document.getElementById('company').value;
+if (namecompany != "") {
+        document.getElementById('departamento').removeAttribute("disabled");
+    } else {
+        document.getElementById('departamento').setAttribute("disabled", null);
+    }
+});
+
 // ENABLE / DISABLE INPUT DEPARTAMENTO --> SALA        
 document.getElementById("departamento").addEventListener("change", function() {
 var namedepartamento = document.getElementById('departamento').value;
@@ -48,6 +58,8 @@ if (nameramal != "") {
     }
 });
 
+
+
 $(document).ready(function () {
     $("#andar").change(function () {
         var val = $(this).val();
@@ -84,9 +96,11 @@ function yesnoCheck() {
         document.getElementById('ifYes').style.display = '';
         document.getElementById('yesCheck').removeAttribute("name"); 
         document.getElementById('cargo').setAttribute("disabled", "true"); 
-        document.getElementById('departamento').removeAttribute("disabled");
+        // document.getElementById('departamento').removeAttribute("disabled");
+        document.getElementById('departamento').setAttribute("disabled", "true"); 
         document.getElementById('cargoVin').setAttribute("name", "cargo");
         document.getElementById('cargoDiv').style.display = 'none';
+        document.getElementById('cargofuncao').style.display = 'none';
     }
     if(document.getElementById('noCheck').checked){
         document.getElementById('yesCheck').setAttribute("name", "vinculo");
@@ -96,6 +110,7 @@ function yesnoCheck() {
         document.getElementById('cargoVin').removeAttribute("name"); 
         document.getElementById('ifYes').style.display = 'none';
         document.getElementById('cargoDiv').style.display = '';
+        document.getElementById('cargofuncao').style.display = '';
     }
 }
 

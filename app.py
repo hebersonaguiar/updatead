@@ -44,7 +44,7 @@ mysql = MySQL(app)
 # CONEXÃO COM O AD
 def conn():
     server_name = 'adserver'
-    user_name   = 'CN=usersvc,OU=Usuarios,OU=CGTI,OU=MME,DC=mme,DC=gov,DC=br'
+    user_name   = 'CN=usersvc,OU=Usuarios,OU=CGTI,OU=MME,DC=mme,DC=gov,DC=br'  
     password    = 'passsvc'
     server      = Server(server_name, get_info=ALL)
     conn        = Connection(server, user=user_name, password=password)
@@ -197,7 +197,7 @@ def modifyuserTask(username, ramal, andar, sala, cargo, vinculo, departamento, c
 		connect.modify(distinguishedName, {'title':  [(MODIFY_REPLACE, [str(cargo)])],
 			'physicalDeliveryOfficeName':  [(MODIFY_REPLACE, [str(local)])],
 			'telephoneNumber':  [(MODIFY_REPLACE, [str(ramal)])],
-			'description':  [(MODIFY_REPLACE, [str(vinculo)])],
+			'company':  [(MODIFY_REPLACE, [str(vinculo)])],
 			'department':  [(MODIFY_REPLACE, [str(departamento)])],
 			'extensionAttribute15':  [(MODIFY_REPLACE, [str(updated)])]
 			})
