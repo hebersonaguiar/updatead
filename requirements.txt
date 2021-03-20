@@ -10,7 +10,7 @@ Flask-MySQLdb==0.2.0
 get==2018.11.19
 idna==2.8
 itsdangerous==1.1.0
-Jinja2==2.10
+Jinja2==2.11.3
 ldap==1.0.2
 ldap3==2.5.2
 MarkupSafe==1.1.0
